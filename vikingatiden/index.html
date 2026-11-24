@@ -31,8 +31,6 @@
   summary::before{content:"+";flex:none;width:1.4em;height:1.4em;border-radius:50%;background:var(--accent-soft);color:var(--accent);text-align:center;line-height:1.4em;font-family:system-ui,sans-serif;font-weight:bold}
   details[open] > summary::before{content:"\2212"}
   .q{flex:1}
-  .tag{flex:none;font:600 .72rem/1 system-ui,sans-serif;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:4px 6px;margin-top:3px}
-  body.notags .tag{display:none}
   .ans{padding:2px 18px 16px 52px;border-top:1px dashed var(--line);padding-top:12px}
   .ans p{margin:0 0 .6em}
   .ans ul{margin:.2em 0 .4em;padding-left:1.2em}
@@ -62,15 +60,13 @@
   <button id="openAll">Visa alla svar</button>
   <button id="closeAll">Dölj alla svar</button>
   <button id="shuffle">Blanda frågorna</button>
-  <button id="tags" class="on">Märkning: på</button>
   <span class="count" id="count"></span>
 </div>
 
 <div id="content"></div>
 
 <footer>
-  Märkning: H = finns i checklistan för häftet, P = finns i checklistan för Puls SO, H+P = finns i båda.
-  Blå ruta betyder att svaret kommer från nätet och inte från boken eller häftet. Kolla gärna med läraren.
+  Blå ruta betyder att svaret kommer från nätet och inte från boken eller häftet. Sidnummer i parentes visar var i Puls SO svaret finns.
 </footer>
 </div>
 
@@ -81,15 +77,15 @@ const P = n => '<span class="pg">(' + n + ')</span>';
 
 const DATA = [
  {title:"1. Forntiden", items:[
-  {q:"Vilka tre historiska perioder ingår i forntiden?", tag:"H",
+  {q:"Vilka tre historiska perioder ingår i forntiden?",
    a:`<p>Stenåldern, bronsåldern och järnåldern, i den ordningen (sten, brons, järn). Vikingatiden är sista delen av järnåldern ${P("s. 74")}.</p>`},
-  {q:"Vad skiljer perioderna åt?", tag:"H",
+  {q:"Vad skiljer perioderna åt?",
    a:`<ul>
      <li>Materialet som sakerna är gjorda av. Stenåldern: yxa av flinta och en älg av sten ${P("s. 93")}. Järnåldern: hjälm av järn ${P("s. 93")}.</li>
      <li>Tiden. Stenåldern kommer först och järnåldern sist. Tidslinjen visar järnåldern som perioden som slutar med vikingatiden ${P("s. 74")}.</li>
      <li>Hur bra sakerna är: på övningsbladet står det att stenåldern hade ganska dåliga grejer och järnåldern mycket bättre saker. Boken skriver inte det själv.</li>
      </ul>${WEB("Bronsåldern i Sverige var ungefär år 1700-500 f.Kr. Brons är en blandning av koppar och tenn. Man gjorde vapen och smycken av brons. Det var dyrt, så det var mest rika och mäktiga som hade det. Järn kom till Sverige omkring år 1000 f.Kr. och tog över efter ungefär 500 år. Järn gick att tillverka i hela landet och var bättre att göra verktyg av.","Västmanlands läns museum (vastmanlandslansmuseum.se), efn.se")}`},
-  {q:"Vad är lika?", tag:"H",
+  {q:"Vad är lika?",
    a:`<ul>
      <li>Alla tre perioderna är forntid. Det finns knappt några skrivna källor från forntiden ${P("s. 92")}.</li>
      <li>Det vi vet kommer från arkeologernas fynd i jorden, som skelett, vapen, verktyg och smycken ${P("s. 92")}.</li>
@@ -97,15 +93,15 @@ const DATA = [
      </ul>`}
  ]},
  {title:"2. Årtal", items:[
-  {q:"Vilka årtal har vikingatiden?", tag:"H+P",
+  {q:"Vilka årtal har vikingatiden?",
    a:`<p>År 800–1050, cirka 250 år ${P("s. 74")}.</p>`},
-  {q:"Varför börjar vikingatiden?", tag:"H+P",
+  {q:"Varför börjar vikingatiden?",
    a:`<ul>
      <li>Befolkningen i Norden ökade, så marken och maten räckte inte till. Äldsta sonen tog över gården, så de andra barnen fick flytta ${P("s. 89")}.</li>
      <li>Man ville handla, erövra och plundra ${P("s. 83, 86")}. Länderna i väst var splittrade och svaga, så det var lätt att plundra dem ${P("s. 87")}.</li>
      <li>Den första kända attacken är på klostret Lindisfarne i England år 793 ${P("s. 95")}.</li>
      </ul>`},
-  {q:"Varför tar vikingatiden slut?", tag:"H+P",
+  {q:"Varför tar vikingatiden slut?",
    a:`<ul>
      <li>Landskapen slogs ihop till kungariken. I slutet av vikingatiden bildades Danmark, Norge och Sverige ${P("s. 90")}.</li>
      <li>Kungarna lämnade asatron och blev kristna. Med kyrkans hjälp kunde kungen styra folket och behålla makten ${P("s. 90")}.</li>
@@ -113,40 +109,40 @@ const DATA = [
      </ul>`}
  ]},
  {title:"3. Livet i byn", items:[
-  {q:"Hur levde människor under vikingatiden?", tag:"P",
+  {q:"Hur levde människor under vikingatiden?",
    a:`<p>De flesta var bönder och bodde i byar eller ensamma gårdar. De levde av jordbruk, jakt och fiske och bytte varor på handelsplatser. Barn hjälpte till på gården och lärde sig av de vuxna, för det fanns ingen skola ${P("s. 76")}.</p>`},
-  {q:"Hur såg en typisk by ut?", tag:"H+P",
+  {q:"Hur såg en typisk by ut?",
    a:`<p>Byn bestod av flera gårdar med hus, åkrar och djur. Staket skyddade odlingarna från betande djur. Om byn låg vid havet fanns en skeppshamn, och på en höjd en befästning där man kunde tända en stor eld för att varna folk ${P("s. 76–77")}.</p>`},
-  {q:"Vad betyder självhushållning?", tag:"H",
+  {q:"Vad betyder självhushållning?",
    a:`<p>Att man själv gör och odlar det mesta man behöver, som mat, redskap och kläder. Ordet står inte i boken. Det här är ordets vanliga betydelse, och s. 76 beskriver hur gårdarna klarade sig själva.</p>`},
-  {q:"Vilken betydelse hade ätten?", tag:"H+P",
+  {q:"Vilken betydelse hade ätten?",
    a:`<p>Ätten är släkten. Den var livsviktig och gav trygghet. Ätten tog hand om fattiga och sjuka släktingar och skyddade mot fiender ${P("s. 76")}.</p>`},
-  {q:"Vilka hade högst respektive lägst status?", tag:"H+P",
+  {q:"Vilka hade högst respektive lägst status?",
    a:`<ul>
      <li>Högst status: den som var rikast och mäktigast, hövdingen. Han ägde den största gården och det största skeppet ${P("s. 76")}.</li>
      <li>Lägst status: trälarna. De var slavar som ägdes av husbonden, och även deras barn tillhörde husbonden ${P("s. 76")}.</li>
      </ul>`},
-  {q:"Vem styrde och bestämde?", tag:"P",
+  {q:"Vem styrde och bestämde?",
    a:`<ul>
      <li>Husbonden ägde gården ${P("s. 78")}.</li>
      <li>Husfrun såg till att alla skötte sina arbeten och att det fanns mat. Hon bar gårdens nycklar, som visade att hon bestämde på gården ${P("s. 78")}.</li>
      <li>Hövdingen med sin ätt bestämde ofta över flera byar ${P("s. 76")}.</li>
      <li>Tinget var ett möte där alla fria män diskuterade och beslutade. Lagmannen ledde tinget, och tinget var också domstol ${P("s. 79")}.</li>
      </ul>`},
-  {q:"Hur förvarade man mat?", tag:"H",
+  {q:"Hur förvarade man mat?",
    a:`<p>Det fanns ingen kyl eller frys. Man saltade, torkade, rökte eller grävde ner maten, eller syrade den, till exempel surströmming ${P("s. 78")}.</p>`},
-  {q:"Vad var kläderna gjorda av?", tag:"H",
+  {q:"Vad var kläderna gjorda av?",
    a:`${WEB("Kläderna gjordes mest av ull och lin (linne). Man hade också skinn och päls. Männen hade byxor och tunika. Kvinnorna hade en hängselklänning över en underklänning. Kläder av tyg ruttnar bort i jorden, så det finns bara små rester kvar att hitta.","Nationalmuseet i Danmark (natmus.dk), norse-mythology.org, histclo.com")}`}
  ]},
  {title:"4. Gudar och blot", items:[
-  {q:"Ge exempel på olika asagudar.", tag:"P",
+  {q:"Ge exempel på olika asagudar.",
    a:`<ul>
      <li>Oden: den viktigaste asaguden och krigsguden. Han bodde i Valhall ${P("s. 81")}.</li>
      <li>Tor: den starkaste och åskguden. Hans vapen var en hammare ${P("s. 81")}.</li>
      <li>Frej och Freja: fruktbarhetsgudar, viktiga för god skörd och för att människor skulle få många barn ${P("s. 81")}.</li>
      <li>Frigg: främsta gudinnan och gift med Oden ${P("s. 81")}.</li>
      </ul>`},
-  {q:"Varför offrade man till gudarna?", tag:"P",
+  {q:"Varför offrade man till gudarna?",
    a:`<p>Nordborna trodde att livet var en strid mellan onda och goda makter och att gudarna kunde hjälpa människorna ${P("s. 80")}. Vid ett blot dödade man djur och gav dem som offer ${P("s. 81")}.</p>
      <ul>
      <li>Inför krig blotade man till Oden för att få hjälp.</li>
@@ -155,35 +151,35 @@ const DATA = [
      </ul>`}
  ]},
  {title:"5. Birka och handel", items:[
-  {q:"Vad var Birka?", tag:"H+P",
+  {q:"Vad var Birka?",
    a:`<p>En handelsplats på Björkö i Mälaren som brukar kallas Sveriges första stad. Det bodde 500–1000 personer där när staden var som störst ${P("s. 82")}.</p>`},
-  {q:"Vad sålde och köpte man i Birka?", tag:"H+P",
+  {q:"Vad sålde och köpte man i Birka?",
    a:`<ul>
      <li>Man handlade med järn, hudar, horn och pälsar ${P("s. 83")}.</li>
      <li>Hantverkare tillverkade kläder, kammar, skor, smycken och vapen ${P("s. 82")}.</li>
      <li>Fynd visar handel med andra länder: arabiskt silver, östeuropeiska pärlor, glasbägare, keramik och tyger ${P("s. 83")}.</li>
      </ul>`},
-  {q:"Vad handlade man med på andra handelsplatser?", tag:"P",
+  {q:"Vad handlade man med på andra handelsplatser?",
    a:`<p>Handelsplatserna fanns i byarna och i städer som Novgorod och Kiev i Ryssland. Vikingarna bytte järn och vapen mot pälsar och trälar ${P("s. 86")}. I Konstantinopel bytte de till sig lyxvaror som guld, glas och kläder ${P("s. 86")}. I väst bytte de skinn och timmer mot vete och tyger ${P("s. 87")}.</p>`},
-  {q:"Finns det någon teori om varför Birka övergavs?", tag:"H",
+  {q:"Finns det någon teori om varför Birka övergavs?",
    a:`${WEB("Man vet inte säkert, men en vanlig teori är att Birka lämnades omkring år 970 och att människorna och handeln flyttade till staden Sigtuna, som grundades ungefär samtidigt. Birka var bebott till omkring år 975.","Wikipedia (Birka and Hovgården), Britannica, Wikiwand")}
      <p>Häftet kan ha en annan teori. Kolla vad läraren sagt.</p>`}
  ]},
  {title:"6. Vikingafärder och skepp", items:[
-  {q:"Varför reste vikingarna ut på vikingafärder?", tag:"H+P",
+  {q:"Varför reste vikingarna ut på vikingafärder?",
    a:`<ul>
      <li>För att handla, erövra nya länder och plundra ${P("s. 83, 86")}.</li>
      <li>För att hitta nya platser att bo på ${P("s. 86")}.</li>
      <li>Befolkningen ökade, så marken och maten räckte inte till. Äldsta sonen tog över gården, så de andra barnen fick flytta ${P("s. 89")}.</li>
      <li>Några hamnade i bråk eller var oense med dem som hade makten. De längtade efter frihet ${P("s. 89")}.</li>
      </ul>`},
-  {q:"Vart reste de?", tag:"H+P",
+  {q:"Vart reste de?",
    a:`<ul>
      <li>Österut: Ryssland, Svarta havet, Konstantinopel och Kaspiska havet ${P("s. 86")}.</li>
      <li>Västerut: England, Skottland, Irland och Frankrike ${P("s. 87")}.</li>
      <li>Island omkring år 860, Grönland på 980-talet och Vinland i Amerika omkring år 1000 ${P("s. 88")}.</li>
      </ul>`},
-  {q:"Hur såg deras båtar ut?", tag:"H+P",
+  {q:"Hur såg deras båtar ut?",
    a:`<ul>
      <li>Långskepp eller drakskepp: långa, smala och snabba ${P("s. 84")}.</li>
      <li>Byggda av långa, tunna brädor som överlappade varandra. Springorna tätades med ull och tjära ${P("s. 84")}.</li>
@@ -191,9 +187,9 @@ const DATA = [
      <li>Ingen köl, utan helt platt undertill, så skeppet kunde gå på grunt vatten. Skeppet var helt öppet ${P("s. 85")}.</li>
      <li>Fören var ofta formad som ett drakhuvud. Längst bak satt en stor åra att styra med ${P("s. 84–85")}.</li>
      </ul>`},
-  {q:"Vad användes båtarna till?", tag:"H",
+  {q:"Vad användes båtarna till?",
    a:`<p>Långskeppen var krigsskepp ${P("s. 84")}. Vikingarna använde skepp för resor, handel och plundring ${P("s. 83, 86")}. De styrde med hjälp av solen och stjärnorna, eftersom de inte hade kompasser eller kartor ${P("s. 83")}.</p>`},
-  {q:"Ge exempel på konsekvenser av vikingarnas resor.", tag:"P",
+  {q:"Ge exempel på konsekvenser av vikingarnas resor.",
    a:`<ul>
      <li>England, Skottland, Irland och Frankrike drabbades av ständiga överfall och plundringar i mer än 200 år ${P("s. 87")}.</li>
      <li>Vikingar grundade egna riken, till exempel i Ryssland, England och Normandie ${P("s. 87")}.</li>
@@ -202,22 +198,22 @@ const DATA = [
      </ul>`}
  ]},
  {title:"7. Runstenar", items:[
-  {q:"Varför restes runstenar?", tag:"H",
+  {q:"Varför restes runstenar?",
    a:`<p>Mäktiga och rika beställde runstenar till minne av någon som dött ${P("s. 94")}.</p>`},
-  {q:"Var restes runstenar?", tag:"H",
+  {q:"Var restes runstenar?",
    a:`<p>På väl synliga platser, så att de spred sina bilder och budskap till dem som färdades förbi ${P("s. 94")}.</p>`},
-  {q:"Hur skilde sig runstenarnas utseende i början och slutet av vikingatiden?", tag:"H",
+  {q:"Hur skilde sig runstenarnas utseende i början och slutet av vikingatiden?",
    a:`${WEB("De tidiga runstenarna var enkla. Mot slutet blev de mer dekorerade och krångliga, och de gjordes av resande runristare. I Sverige blev det vanligt med kristna kors och böner på stenarna. Runstenar var färgglada när de restes, men färgen har försvunnit.","Wikipedia (Runestone, Runestone styles), Scandia (journals.lub.lu.se)")}
      <p>Ett exempel i boken är Jellingestenen, som kan ha varit färglagd och har en bild av Jesus. Den restes av kung Harald Blåtand, som såg till att danskarna blev kristna ${P("s. 90")}.</p>`}
  ]},
  {title:"8. Källor", items:[
-  {q:"Ge exempel på källor från vikingatiden.", tag:"H+P",
+  {q:"Ge exempel på källor från vikingatiden.",
    a:`<ul>
      <li>Saker man kan ta på: skelett, vapen, verktyg och smycken som hittats vid utgrävningar av gravar och boplatser ${P("s. 92")}.</li>
      <li>Skrivna källor: runstenar ${P("s. 94")}, brev, kartor och dagböcker ${P("s. 92")}. Exempel är munkarnas text om attacken på Lindisfarne år 793 och araben ibn Fadlans reseberättelse från år 922 ${P("s. 95")}.</li>
      <li>Berättelser och sagor: de berättades från förälder till barn och skrevs ner på Island på 1200-talet. Ett exempel är boken Heimskringla av Snorre Sturlasson ${P("s. 95")}.</li>
      </ul>`},
-  {q:"Vad kallas de olika källorna?", tag:"H+P",
+  {q:"Vad kallas de olika källorna?",
    a:`<ul>
      <li>Materiella källor: saker man kan ta på ${P("s. 92")}.</li>
      <li>Skriftliga källor: det som är skrivet, till exempel runstenar, brev och dagböcker ${P("s. 92, 94")}.</li>
@@ -258,14 +254,13 @@ function render(shuffled){
     const items = sec.items.slice();
     if (shuffled) items.sort(() => Math.random() - 0.5);
     items.forEach(it => {
-      const d = el('<details><summary><span class="q"></span><span class="tag"></span></summary><div class="ans"></div></details>');
+      const d = el('<details><summary><span class="q"></span></summary><div class="ans"></div></details>');
       d.querySelector('.q').textContent = it.q;
-      d.querySelector('.tag').textContent = it.tag;
       d.querySelector('.ans').innerHTML = it.a;
       content.appendChild(d);
     });
   });
-  const h = el('<h2></h2>'); h.textContent = '9. Begreppslistan (P)'; content.appendChild(h);
+  const h = el('<h2></h2>'); h.textContent = '9. Begreppslistan'; content.appendChild(h);
   const grid = el('<div class="terms"></div>');
   const terms = TERMS.slice();
   if (shuffled) terms.sort(() => Math.random() - 0.5);
@@ -289,11 +284,6 @@ function updateCount(){
 document.getElementById('openAll').onclick  = () => { all().forEach(d=>d.open=true);  updateCount(); };
 document.getElementById('closeAll').onclick = () => { all().forEach(d=>d.open=false); updateCount(); };
 document.getElementById('shuffle').onclick  = () => render(true);
-document.getElementById('tags').onclick = function(){
-  document.body.classList.toggle('notags');
-  this.classList.toggle('on');
-  this.textContent = this.classList.contains('on') ? 'Märkning: på' : 'Märkning: av';
-};
 content.addEventListener('toggle', updateCount, true);
 render(false);
 </script>
