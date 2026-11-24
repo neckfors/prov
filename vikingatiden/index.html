@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vikingatiden: öva inför provet</title>
+<style>
+  :root{
+    --bg:#f6f1e7; --card:#fffdf8; --ink:#2b2620; --muted:#6f665a; --line:#e3d9c6;
+    --accent:#9a3b1f; --accent-soft:#f6e3da; --ok:#2f6b4f; --warn:#8a5a00; --warn-bg:#fdf1d6;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#1d1a16; --card:#27231e; --ink:#efe8da; --muted:#b0a590; --line:#3b352c;
+      --accent:#e58a68; --accent-soft:#3a2a23; --ok:#7fc4a0; --warn:#e8b95a; --warn-bg:#3a3017; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.55 Georgia,"Times New Roman",serif}
+  .wrap{max-width:760px;margin:0 auto;padding:20px 16px 60px}
+  header h1{font-size:1.9rem;line-height:1.2;margin:12px 0 6px}
+  header p{margin:0 0 14px;color:var(--muted);font-size:.95rem}
+  .bar{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:5;border-bottom:1px solid var(--line)}
+  button{font:inherit;font-size:.9rem;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+  button:hover{border-color:var(--accent)}
+  button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .count{margin-left:auto;align-self:center;color:var(--muted);font-size:.9rem}
+  h2{font-size:1.25rem;margin:34px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--accent);color:var(--accent)}
+  details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:8px 0;overflow:hidden}
+  details[open]{border-color:var(--accent)}
+  summary{cursor:pointer;padding:14px 16px;font-weight:bold;list-style:none;display:flex;gap:10px;align-items:flex-start}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"+";flex:none;width:1.4em;height:1.4em;border-radius:50%;background:var(--accent-soft);color:var(--accent);text-align:center;line-height:1.4em;font-family:system-ui,sans-serif;font-weight:bold}
+  details[open] > summary::before{content:"\2212"}
+  .q{flex:1}
+  .tag{flex:none;font:600 .72rem/1 system-ui,sans-serif;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:4px 6px;margin-top:3px}
+  body.notags .tag{display:none}
+  .ans{padding:2px 18px 16px 52px;border-top:1px dashed var(--line);padding-top:12px}
+  .ans p{margin:0 0 .6em}
+  .ans ul{margin:.2em 0 .4em;padding-left:1.2em}
+  .ans li{margin:.3em 0}
+  .pg{color:var(--muted);font-size:.85em;white-space:nowrap}
+  .miss{background:var(--warn-bg);color:var(--warn);border-radius:8px;padding:8px 12px;margin:.4em 0;font-size:.95rem}
+  .terms{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+  .terms details{margin:0}
+  .terms summary{padding:12px 14px}
+  .terms .ans{padding:10px 14px 14px}
+  footer{margin-top:40px;color:var(--muted);font-size:.85rem}
+  @media print{ .bar{display:none} details{break-inside:avoid} }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <p><a href="../" style="color:inherit">&larr; Alla prov</a></p>
+  <h1>Vikingatiden: öva inför provet</h1>
+  <p>Klicka på en fråga för att se svaret. Försök svara själv först. Sidhänvisningar gäller Puls SO, s. 74–97.</p>
+</header>
+
+<div class="bar">
+  <button id="openAll">Visa alla svar</button>
+  <button id="closeAll">Dölj alla svar</button>
+  <button id="shuffle">Blanda frågorna</button>
+  <button id="tags" class="on">Märkning: på</button>
+  <span class="count" id="count"></span>
+</div>
+
+<div id="content"></div>
+
+<footer>
+  Märkning: H = finns i checklistan för häftet, P = finns i checklistan för Puls SO, H+P = finns i båda.
+  Gul ruta betyder att svaret inte står på boksidorna. Fråga läraren eller titta i häftet.
+</footer>
+</div>
+
+<script>
+const MISS = t => '<div class="miss">' + t + '</div>';
+const P = n => '<span class="pg">(' + n + ')</span>';
+
+const DATA = [
+ {title:"1. Forntiden", items:[
+  {q:"Vilka tre historiska perioder ingår i forntiden?", tag:"H",
+   a:`<p>Stenåldern, bronsåldern och järnåldern, i den ordningen (sten, brons, järn). Vikingatiden är sista delen av järnåldern ${P("s. 74")}.</p>`},
+  {q:"Vad skiljer perioderna åt?", tag:"H",
+   a:`<ul>
+     <li>Materialet som sakerna är gjorda av. Stenåldern: yxa av flinta och en älg av sten ${P("s. 93")}. Järnåldern: hjälm av järn ${P("s. 93")}.</li>
+     <li>Tiden. Stenåldern kommer först och järnåldern sist. Tidslinjen visar järnåldern som perioden som slutar med vikingatiden ${P("s. 74")}.</li>
+     <li>Hur bra sakerna är: på övningsbladet står det att stenåldern hade ganska dåliga grejer och järnåldern mycket bättre saker. Boken skriver inte det själv.</li>
+     </ul>${MISS("Saknas på boksidorna: vad som var speciellt med bronsåldern. Bronsen nämns bara som dekoration på vikingatida hjälmar (s. 93).")}`},
+  {q:"Vad är lika?", tag:"H",
+   a:`<ul>
+     <li>Alla tre perioderna är forntid. Det finns knappt några skrivna källor från forntiden ${P("s. 92")}.</li>
+     <li>Det vi vet kommer från arkeologernas fynd i jorden, som skelett, vapen, verktyg och smycken ${P("s. 92")}.</li>
+     <li>Människor gjorde verktyg, vapen och smycken och begravde sina döda i gravar under alla perioderna ${P("s. 93")}.</li>
+     </ul>`}
+ ]},
+ {title:"2. Årtal", items:[
+  {q:"Vilka årtal har vikingatiden?", tag:"H+P",
+   a:`<p>År 800–1050, cirka 250 år ${P("s. 74")}.</p>`},
+  {q:"Varför börjar vikingatiden?", tag:"H+P",
+   a:`<ul>
+     <li>Befolkningen i Norden ökade, så marken och maten räckte inte till. Äldsta sonen tog över gården, så de andra barnen fick flytta ${P("s. 89")}.</li>
+     <li>Man ville handla, erövra och plundra ${P("s. 83, 86")}. Länderna i väst var splittrade och svaga, så det var lätt att plundra dem ${P("s. 87")}.</li>
+     <li>Den första kända attacken är på klostret Lindisfarne i England år 793 ${P("s. 95")}.</li>
+     </ul>`},
+  {q:"Varför tar vikingatiden slut?", tag:"H+P",
+   a:`<ul>
+     <li>Landskapen slogs ihop till kungariken. I slutet av vikingatiden bildades Danmark, Norge och Sverige ${P("s. 90")}.</li>
+     <li>Kungarna lämnade asatron och blev kristna. Med kyrkans hjälp kunde kungen styra folket och behålla makten ${P("s. 90")}.</li>
+     <li>Från omkring år 1050 blev kristendomen den viktigaste religionen i Sverige ${P("s. 91")}.</li>
+     </ul>`}
+ ]},
+ {title:"3. Livet i byn", items:[
+  {q:"Hur levde människor under vikingatiden?", tag:"P",
+   a:`<p>De flesta var bönder och bodde i byar eller ensamma gårdar. De levde av jordbruk, jakt och fiske och bytte varor på handelsplatser. Barn hjälpte till på gården och lärde sig av de vuxna, för det fanns ingen skola ${P("s. 76")}.</p>`},
+  {q:"Hur såg en typisk by ut?", tag:"H+P",
+   a:`<p>Byn bestod av flera gårdar med hus, åkrar och djur. Staket skyddade odlingarna från betande djur. Om byn låg vid havet fanns en skeppshamn, och på en höjd en befästning där man kunde tända en stor eld för att varna folk ${P("s. 76–77")}.</p>`},
+  {q:"Vad betyder självhushållning?", tag:"H",
+   a:`<p>Att man själv gör och odlar det mesta man behöver, som mat, redskap och kläder. Ordet står inte i boken, men s. 76 beskriver hur gårdarna klarade sig själva.</p>`},
+  {q:"Vilken betydelse hade ätten?", tag:"H+P",
+   a:`<p>Ätten är släkten. Den var livsviktig och gav trygghet. Ätten tog hand om fattiga och sjuka släktingar och skyddade mot fiender ${P("s. 76")}.</p>`},
+  {q:"Vilka hade högst respektive lägst status?", tag:"H+P",
+   a:`<ul>
+     <li>Högst status: den som var rikast och mäktigast, hövdingen. Han ägde den största gården och det största skeppet ${P("s. 76")}.</li>
+     <li>Lägst status: trälarna. De var slavar som ägdes av husbonden, och även deras barn tillhörde husbonden ${P("s. 76")}.</li>
+     </ul>`},
+  {q:"Vem styrde och bestämde?", tag:"P",
+   a:`<ul>
+     <li>Husbonden ägde gården ${P("s. 78")}.</li>
+     <li>Husfrun såg till att alla skötte sina arbeten och att det fanns mat. Hon bar gårdens nycklar, som visade att hon bestämde på gården ${P("s. 78")}.</li>
+     <li>Hövdingen med sin ätt bestämde ofta över flera byar ${P("s. 76")}.</li>
+     <li>Tinget var ett möte där alla fria män diskuterade och beslutade. Lagmannen ledde tinget, och tinget var också domstol ${P("s. 79")}.</li>
+     </ul>`},
+  {q:"Hur förvarade man mat?", tag:"H",
+   a:`<p>Det fanns ingen kyl eller frys. Man saltade, torkade, rökte eller grävde ner maten, eller syrade den, till exempel surströmming ${P("s. 78")}.</p>`},
+  {q:"Vad var kläderna gjorda av?", tag:"H",
+   a:`${MISS("Saknas på boksidorna. Titta i häftet.")}`}
+ ]},
+ {title:"4. Gudar och blot", items:[
+  {q:"Ge exempel på olika asagudar.", tag:"P",
+   a:`<ul>
+     <li>Oden: den viktigaste asaguden och krigsguden. Han bodde i Valhall ${P("s. 81")}.</li>
+     <li>Tor: den starkaste och åskguden. Hans vapen var en hammare ${P("s. 81")}.</li>
+     <li>Frej och Freja: fruktbarhetsgudar, viktiga för god skörd och för att människor skulle få många barn ${P("s. 81")}.</li>
+     <li>Frigg: främsta gudinnan och gift med Oden ${P("s. 81")}.</li>
+     </ul>`},
+  {q:"Varför offrade man till gudarna?", tag:"P",
+   a:`<p>Nordborna trodde att livet var en strid mellan onda och goda makter och att gudarna kunde hjälpa människorna ${P("s. 80")}. Vid ett blot dödade man djur och gav dem som offer ${P("s. 81")}.</p>
+     <ul>
+     <li>Inför krig blotade man till Oden för att få hjälp.</li>
+     <li>Vid höstblotet tackade man Frej och Freja för årets skörd.</li>
+     <li>Man bad Skade om hjälp inför vintern. Midvinterblotet firades när det var som mörkast ${P("s. 81")}.</li>
+     </ul>`}
+ ]},
+ {title:"5. Birka och handel", items:[
+  {q:"Vad var Birka?", tag:"H+P",
+   a:`<p>En handelsplats på Björkö i Mälaren som brukar kallas Sveriges första stad. Det bodde 500–1000 personer där när staden var som störst ${P("s. 82")}.</p>`},
+  {q:"Vad sålde och köpte man i Birka?", tag:"H+P",
+   a:`<ul>
+     <li>Man handlade med järn, hudar, horn och pälsar ${P("s. 83")}.</li>
+     <li>Hantverkare tillverkade kläder, kammar, skor, smycken och vapen ${P("s. 82")}.</li>
+     <li>Fynd visar handel med andra länder: arabiskt silver, östeuropeiska pärlor, glasbägare, keramik och tyger ${P("s. 83")}.</li>
+     </ul>`},
+  {q:"Vad handlade man med på andra handelsplatser?", tag:"P",
+   a:`<p>Handelsplatserna fanns i byarna och i städer som Novgorod och Kiev i Ryssland. Vikingarna bytte järn och vapen mot pälsar och trälar ${P("s. 86")}. I Konstantinopel bytte de till sig lyxvaror som guld, glas och kläder ${P("s. 86")}. I väst bytte de skinn och timmer mot vete och tyger ${P("s. 87")}.</p>`},
+  {q:"Finns det någon teori om varför Birka övergavs?", tag:"H",
+   a:`${MISS("Saknas på boksidorna. Titta i häftet.")}`}
+ ]},
+ {title:"6. Vikingafärder och skepp", items:[
+  {q:"Varför reste vikingarna ut på vikingafärder?", tag:"H+P",
+   a:`<ul>
+     <li>För att handla, erövra nya länder och plundra ${P("s. 83, 86")}.</li>
+     <li>För att hitta nya platser att bo på ${P("s. 86")}.</li>
+     <li>Befolkningen ökade, så marken och maten räckte inte till. Äldsta sonen tog över gården, så de andra barnen fick flytta ${P("s. 89")}.</li>
+     <li>Några hamnade i bråk eller var oense med dem som hade makten. De längtade efter frihet ${P("s. 89")}.</li>
+     </ul>`},
+  {q:"Vart reste de?", tag:"H+P",
+   a:`<ul>
+     <li>Österut: Ryssland, Svarta havet, Konstantinopel och Kaspiska havet ${P("s. 86")}.</li>
+     <li>Västerut: England, Skottland, Irland och Frankrike ${P("s. 87")}.</li>
+     <li>Island omkring år 860, Grönland på 980-talet och Vinland i Amerika omkring år 1000 ${P("s. 88")}.</li>
+     </ul>`},
+  {q:"Hur såg deras båtar ut?", tag:"H+P",
+   a:`<ul>
+     <li>Långskepp eller drakskepp: långa, smala och snabba ${P("s. 84")}.</li>
+     <li>Byggda av långa, tunna brädor som överlappade varandra. Springorna tätades med ull och tjära ${P("s. 84")}.</li>
+     <li>Ett stort, fyrkantigt segel av ull och långa åror ${P("s. 85")}.</li>
+     <li>Ingen köl, utan helt platt undertill, så skeppet kunde gå på grunt vatten. Skeppet var helt öppet ${P("s. 85")}.</li>
+     <li>Fören var ofta formad som ett drakhuvud. Längst bak satt en stor åra att styra med ${P("s. 84–85")}.</li>
+     </ul>`},
+  {q:"Vad användes båtarna till?", tag:"H",
+   a:`<p>Långskeppen var krigsskepp ${P("s. 84")}. Vikingarna använde skepp för resor, handel och plundring ${P("s. 83, 86")}. De styrde med hjälp av solen och stjärnorna, eftersom de inte hade kompasser eller kartor ${P("s. 83")}.</p>`},
+  {q:"Ge exempel på konsekvenser av vikingarnas resor.", tag:"P",
+   a:`<ul>
+     <li>England, Skottland, Irland och Frankrike drabbades av ständiga överfall och plundringar i mer än 200 år ${P("s. 87")}.</li>
+     <li>Vikingar grundade egna riken, till exempel i Ryssland, England och Normandie ${P("s. 87")}.</li>
+     <li>Island fick nya invånare, och vikingarna nådde Grönland och Amerika ${P("s. 88")}.</li>
+     <li>Många vikingar kom aldrig tillbaka till Norden ${P("s. 87")}.</li>
+     </ul>`}
+ ]},
+ {title:"7. Runstenar", items:[
+  {q:"Varför restes runstenar?", tag:"H",
+   a:`<p>Mäktiga och rika beställde runstenar till minne av någon som dött ${P("s. 94")}.</p>`},
+  {q:"Var restes runstenar?", tag:"H",
+   a:`<p>På väl synliga platser, så att de spred sina bilder och budskap till dem som färdades förbi ${P("s. 94")}.</p>`},
+  {q:"Hur skilde sig runstenarnas utseende i början och slutet av vikingatiden?", tag:"H",
+   a:`${MISS("Saknas tydligt på boksidorna. Fråga läraren vad som skiljer början från slutet.")}
+     <p>Ett exempel är Jellingestenen. Den är en stor runsten som kan ha varit färglagd och har en bild av Jesus. Den restes av Danmarks kung Harald Blåtand, som såg till att danskarna blev kristna ${P("s. 90")}.</p>`}
+ ]},
+ {title:"8. Källor", items:[
+  {q:"Ge exempel på källor från vikingatiden.", tag:"H+P",
+   a:`<ul>
+     <li>Saker man kan ta på: skelett, vapen, verktyg och smycken som hittats vid utgrävningar av gravar och boplatser ${P("s. 92")}.</li>
+     <li>Skrivna källor: runstenar ${P("s. 94")}, brev, kartor och dagböcker ${P("s. 92")}. Exempel är munkarnas text om attacken på Lindisfarne år 793 och araben ibn Fadlans reseberättelse från år 922 ${P("s. 95")}.</li>
+     <li>Berättelser och sagor: de berättades från förälder till barn och skrevs ner på Island på 1200-talet. Ett exempel är boken Heimskringla av Snorre Sturlasson ${P("s. 95")}.</li>
+     </ul>`},
+  {q:"Vad kallas de olika källorna?", tag:"H+P",
+   a:`<ul>
+     <li>Materiella källor: saker man kan ta på ${P("s. 92")}.</li>
+     <li>Skriftliga källor: det som är skrivet, till exempel runstenar, brev och dagböcker ${P("s. 92, 94")}.</li>
+     <li>Muntliga källor: berättelser och sagor ${P("s. 95")}.</li>
+     </ul>
+     <p>Forskarnas gissningar kallas teorier ${P("s. 92")}. Den som undersöker historien kallas historiker, och arkeologer gräver fram fynd ${P("s. 92")}.</p>`}
+ ]}
+];
+
+const TERMS = [
+ ["Träl","Slav","76"],["Ätt","Släkt","76"],
+ ["Husbonde","Mansperson som bestämmer över gården","76, 78"],
+ ["Husfru","Kvinnan som är föreståndare för sin familj","78"],
+ ["Ting","Möte där alla fria män träffas och bestämmer saker","79"],
+ ["Handelsplats","Plats där människor träffas och handlar","76, 82"],
+ ["Hövding","Person med mest makt i byn","76, 95"],
+ ["Plundra","Röva, stjäla hänsynslöst","83, 87"],
+ ["Långskepp","Typ av vikingaskepp (smalt, lågt, snabbt)","84"],
+ ["Asagud","Gudar i den fornnordiska religionen","81"],
+ ["Blot","När man offrar till gudarna","81"],
+ ["Missionär","Person som är utskickad att berätta om sin religion","90"],
+ ["Arkeolog","Person som studerar hur människor levde förr","92"],
+ ["Materiella källor","Saker man kan ta på, t.ex. skelett och vapen","92"],
+ ["Skriftliga källor","T.ex. runstenar","92, 94"],
+ ["Muntliga källor","Berättelser och sagor","95"],
+ ["Orsak","Varför något händer","ordet används på s. 89"],
+ ["Konsekvens","Följden av det som händer","ordet finns inte på sidorna"]
+];
+
+const content = document.getElementById('content');
+
+function el(html){ const t=document.createElement('template'); t.innerHTML=html.trim(); return t.content.firstChild; }
+
+function render(shuffled){
+  content.innerHTML = '';
+  DATA.forEach(sec => {
+    const h = el('<h2></h2>'); h.textContent = sec.title; content.appendChild(h);
+    const items = sec.items.slice();
+    if (shuffled) items.sort(() => Math.random() - 0.5);
+    items.forEach(it => {
+      const d = el('<details><summary><span class="q"></span><span class="tag"></span></summary><div class="ans"></div></details>');
+      d.querySelector('.q').textContent = it.q;
+      d.querySelector('.tag').textContent = it.tag;
+      d.querySelector('.ans').innerHTML = it.a;
+      content.appendChild(d);
+    });
+  });
+  const h = el('<h2></h2>'); h.textContent = '9. Begreppslistan (P)'; content.appendChild(h);
+  const grid = el('<div class="terms"></div>');
+  const terms = TERMS.slice();
+  if (shuffled) terms.sort(() => Math.random() - 0.5);
+  terms.forEach(([t,m,p]) => {
+    const d = el('<details><summary><span class="q"></span></summary><div class="ans"></div></details>');
+    d.querySelector('.q').textContent = t;
+    d.querySelector('.ans').innerHTML = '<p></p><span class="pg"></span>';
+    d.querySelector('.ans p').textContent = m;
+    d.querySelector('.pg').textContent = /^\d/.test(p) ? '(s. ' + p + ')' : '(' + p + ')';
+    grid.appendChild(d);
+  });
+  content.appendChild(grid);
+  updateCount();
+}
+
+function all(){ return Array.from(document.querySelectorAll('#content details')); }
+function updateCount(){
+  const a = all();
+  document.getElementById('count').textContent = a.filter(d=>d.open).length + ' av ' + a.length + ' öppna';
+}
+document.getElementById('openAll').onclick  = () => { all().forEach(d=>d.open=true);  updateCount(); };
+document.getElementById('closeAll').onclick = () => { all().forEach(d=>d.open=false); updateCount(); };
+document.getElementById('shuffle').onclick  = () => render(true);
+document.getElementById('tags').onclick = function(){
+  document.body.classList.toggle('notags');
+  this.classList.toggle('on');
+  this.textContent = this.classList.contains('on') ? 'Märkning: på' : 'Märkning: av';
+};
+content.addEventListener('toggle', updateCount, true);
+render(false);
+</script>
+</body>
+</html>
