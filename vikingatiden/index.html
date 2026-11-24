@@ -38,6 +38,9 @@
   .ans ul{margin:.2em 0 .4em;padding-left:1.2em}
   .ans li{margin:.3em 0}
   .pg{color:var(--muted);font-size:.85em;white-space:nowrap}
+  .web{background:#e6eef8;color:#1f4b7a;border-radius:8px;padding:8px 12px;margin:.6em 0;font-size:.95rem}
+  @media (prefers-color-scheme: dark){ .web{background:#1c2a3a;color:#9cc3ea} }
+  .src{display:block;margin-top:.4em;font-size:.8em;opacity:.8}
   .miss{background:var(--warn-bg);color:var(--warn);border-radius:8px;padding:8px 12px;margin:.4em 0;font-size:.95rem}
   .terms{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
   .terms details{margin:0}
@@ -67,12 +70,13 @@
 
 <footer>
   Märkning: H = finns i checklistan för häftet, P = finns i checklistan för Puls SO, H+P = finns i båda.
-  Gul ruta betyder att svaret inte står på boksidorna. Fråga läraren eller titta i häftet.
+  Blå ruta betyder att svaret kommer från nätet och inte från boken eller häftet. Kolla gärna med läraren.
 </footer>
 </div>
 
 <script>
 const MISS = t => '<div class="miss">' + t + '</div>';
+const WEB = (t,src) => '<div class="web"><b>Från nätet, inte från boken eller häftet:</b> ' + t + '<span class="src">Källor: ' + src + '</span></div>';
 const P = n => '<span class="pg">(' + n + ')</span>';
 
 const DATA = [
@@ -84,7 +88,7 @@ const DATA = [
      <li>Materialet som sakerna är gjorda av. Stenåldern: yxa av flinta och en älg av sten ${P("s. 93")}. Järnåldern: hjälm av järn ${P("s. 93")}.</li>
      <li>Tiden. Stenåldern kommer först och järnåldern sist. Tidslinjen visar järnåldern som perioden som slutar med vikingatiden ${P("s. 74")}.</li>
      <li>Hur bra sakerna är: på övningsbladet står det att stenåldern hade ganska dåliga grejer och järnåldern mycket bättre saker. Boken skriver inte det själv.</li>
-     </ul>${MISS("Saknas på boksidorna: vad som var speciellt med bronsåldern. Bronsen nämns bara som dekoration på vikingatida hjälmar (s. 93).")}`},
+     </ul>${WEB("Bronsåldern i Sverige var ungefär år 1700-500 f.Kr. Brons är en blandning av koppar och tenn. Man gjorde vapen och smycken av brons. Det var dyrt, så det var mest rika och mäktiga som hade det. Järn kom till Sverige omkring år 1000 f.Kr. och tog över efter ungefär 500 år. Järn gick att tillverka i hela landet och var bättre att göra verktyg av.","Västmanlands läns museum (vastmanlandslansmuseum.se), efn.se")}`},
   {q:"Vad är lika?", tag:"H",
    a:`<ul>
      <li>Alla tre perioderna är forntid. Det finns knappt några skrivna källor från forntiden ${P("s. 92")}.</li>
@@ -114,7 +118,7 @@ const DATA = [
   {q:"Hur såg en typisk by ut?", tag:"H+P",
    a:`<p>Byn bestod av flera gårdar med hus, åkrar och djur. Staket skyddade odlingarna från betande djur. Om byn låg vid havet fanns en skeppshamn, och på en höjd en befästning där man kunde tända en stor eld för att varna folk ${P("s. 76–77")}.</p>`},
   {q:"Vad betyder självhushållning?", tag:"H",
-   a:`<p>Att man själv gör och odlar det mesta man behöver, som mat, redskap och kläder. Ordet står inte i boken, men s. 76 beskriver hur gårdarna klarade sig själva.</p>`},
+   a:`<p>Att man själv gör och odlar det mesta man behöver, som mat, redskap och kläder. Ordet står inte i boken. Det här är ordets vanliga betydelse, och s. 76 beskriver hur gårdarna klarade sig själva.</p>`},
   {q:"Vilken betydelse hade ätten?", tag:"H+P",
    a:`<p>Ätten är släkten. Den var livsviktig och gav trygghet. Ätten tog hand om fattiga och sjuka släktingar och skyddade mot fiender ${P("s. 76")}.</p>`},
   {q:"Vilka hade högst respektive lägst status?", tag:"H+P",
@@ -132,7 +136,7 @@ const DATA = [
   {q:"Hur förvarade man mat?", tag:"H",
    a:`<p>Det fanns ingen kyl eller frys. Man saltade, torkade, rökte eller grävde ner maten, eller syrade den, till exempel surströmming ${P("s. 78")}.</p>`},
   {q:"Vad var kläderna gjorda av?", tag:"H",
-   a:`${MISS("Saknas på boksidorna. Titta i häftet.")}`}
+   a:`${WEB("Kläderna gjordes mest av ull och lin (linne). Man hade också skinn och päls. Männen hade byxor och tunika. Kvinnorna hade en hängselklänning över en underklänning. Kläder av tyg ruttnar bort i jorden, så det finns bara små rester kvar att hitta.","Nationalmuseet i Danmark (natmus.dk), norse-mythology.org, histclo.com")}`}
  ]},
  {title:"4. Gudar och blot", items:[
   {q:"Ge exempel på olika asagudar.", tag:"P",
@@ -162,7 +166,8 @@ const DATA = [
   {q:"Vad handlade man med på andra handelsplatser?", tag:"P",
    a:`<p>Handelsplatserna fanns i byarna och i städer som Novgorod och Kiev i Ryssland. Vikingarna bytte järn och vapen mot pälsar och trälar ${P("s. 86")}. I Konstantinopel bytte de till sig lyxvaror som guld, glas och kläder ${P("s. 86")}. I väst bytte de skinn och timmer mot vete och tyger ${P("s. 87")}.</p>`},
   {q:"Finns det någon teori om varför Birka övergavs?", tag:"H",
-   a:`${MISS("Saknas på boksidorna. Titta i häftet.")}`}
+   a:`${WEB("Man vet inte säkert, men en vanlig teori är att Birka lämnades omkring år 970 och att människorna och handeln flyttade till staden Sigtuna, som grundades ungefär samtidigt. Birka var bebott till omkring år 975.","Wikipedia (Birka and Hovgården), Britannica, Wikiwand")}
+     <p>Häftet kan ha en annan teori. Kolla vad läraren sagt.</p>`}
  ]},
  {title:"6. Vikingafärder och skepp", items:[
   {q:"Varför reste vikingarna ut på vikingafärder?", tag:"H+P",
@@ -202,8 +207,8 @@ const DATA = [
   {q:"Var restes runstenar?", tag:"H",
    a:`<p>På väl synliga platser, så att de spred sina bilder och budskap till dem som färdades förbi ${P("s. 94")}.</p>`},
   {q:"Hur skilde sig runstenarnas utseende i början och slutet av vikingatiden?", tag:"H",
-   a:`${MISS("Saknas tydligt på boksidorna. Fråga läraren vad som skiljer början från slutet.")}
-     <p>Ett exempel är Jellingestenen. Den är en stor runsten som kan ha varit färglagd och har en bild av Jesus. Den restes av Danmarks kung Harald Blåtand, som såg till att danskarna blev kristna ${P("s. 90")}.</p>`}
+   a:`${WEB("De tidiga runstenarna var enkla. Mot slutet blev de mer dekorerade och krångliga, och de gjordes av resande runristare. I Sverige blev det vanligt med kristna kors och böner på stenarna. Runstenar var färgglada när de restes, men färgen har försvunnit.","Wikipedia (Runestone, Runestone styles), Scandia (journals.lub.lu.se)")}
+     <p>Ett exempel i boken är Jellingestenen, som kan ha varit färglagd och har en bild av Jesus. Den restes av kung Harald Blåtand, som såg till att danskarna blev kristna ${P("s. 90")}.</p>`}
  ]},
  {title:"8. Källor", items:[
   {q:"Ge exempel på källor från vikingatiden.", tag:"H+P",
