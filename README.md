@@ -12,3 +12,7 @@ Sidan finns på https://neckfors.github.io/prov/
 
 1. Skapa en mapp, till exempel `geografi/`, med en `index.html`.
 2. Lägg en länk till den i `index.html` i roten och i listan ovan.
+
+## För AI och medarbetare
+
+Reglerna för innehållet (sidhänvisningar, egna svar som måste märkas, nivå för årskurs 4 och mer) står i [CLAUDE.md](CLAUDE.md).

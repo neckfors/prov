@@ -1,0 +1,1 @@
+Läs `CLAUDE.md` i den här mappen. Där står reglerna för hur provsidorna ska skrivas, framför allt att varje svar ska ha sidhänvisning till bok eller häfte och att egna svar måste märkas som att de inte kommer från bok eller häfte.
